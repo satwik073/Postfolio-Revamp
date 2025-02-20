@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.cdnfonts.com/css/satoshi" rel="stylesheet">
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Satoshi', sans-serif;
+        }
+
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            table-layout: fixed;
+            page-break-inside: avoid;
+        }
+
+        th,
+        td {
+            text-align: left;
+            vertical-align: top;
+        }
+
+        header {
+            border-bottom: 0.35mm solid #0000001F;
+        }
+
+        footer {
+            background-color: #EEF1F7;
+            padding: 1.76mm 5.65mm;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .divider {
+            border: 0.35mm dashed #B5BBC3;
+            margin: 5.65mm 0;
+        }
+
+        .header-divider {
+            border: 0.35mm solid #B5BBC3;
+            margin: 0.70mm 0;
+        }
+
+        .availability {
+            gap: 1.76mm;
+            background-color: #F2F6E7;
+            padding: 1.06mm 2.82mm;
+            align-items: center;
+            border-radius: 15.52mm;
+        }
+
+        .green-dot {
+            height: 2.82mm;
+            width: 2.82mm;
+            background-color: #7DA50E;
+            border-radius: 50%;
+        }
+
+        .chip {
+            padding: 0.70mm 1.41mm;
+            background-color: #F2F4F7;
+            border-radius: 1.06mm;
+            color: #4F555E;
+            display: inline-block;
+            white-space: nowrap;
+            margin: 0.70mm;
+        }
+
+        ul,
+        ol {
+            list-style-position: inside;
+        }
+
+        .avoid {
+            page-break-inside: avoid !important;
+            margin: 1.41mm 0;
+        }
+    </style>
+</head>
+
+<body>
+    <span>
+
+        {% macro format_date(date_string) %}
+        {% set date_part = date_string.split('T')[0] %}
+        {% set year, month, day = date_part.split('-') %}
+        {{ month }}/{{ day }}/{{ year }}
+        {% endmacro %}
+    </span>
+
+    <main style="padding-left: 5.65mm; padding-right: 1.41mm; padding-top: 4.23mm;">
+        <div style="margin: 0cm 1cm;">
+            <span>{% for product_group in products|batch(4) %}</span>
+            <div>
+                <span>
+
+                    {% for product_row in product_group|batch(2) %}
+                </span>
+                <div style="min-height: 13cm;">
+                    <table style="width: 100%; border-collapse: collapse; text-align: center;">
+                        <tr>
+                            <span>
+
+                                {% for product in product_row %}
+                            </span>
+                            <td style="width: 50%; padding-bottom: 7.06mm; padding-right: 4.23mm;">
+                                <table style="width: 100%; border-collapse: separate;">
+                                    <tr style="width: 100%;">
+                                        <td>
+                                            <div style="padding-bottom: 3.53mm;">
+                                                <div
+                                                    style="position: relative; width: 100%; border-radius: 2.82mm; border: 0.35mm solid lightgray; overflow: hidden;">
+                                                    <div style="width: 100%; height: 68.22mm;">
+                                                        <div
+                                                            style="width: 100%; height: 100%; background: transparent;">
+                                                            <img src="{{ product.product_image_1 if product.product_image_1 else 'https://frontend-bucket.vercel.app/images/store_front_img_not_found.svg' }}"
+                                                                alt="Product Image"
+                                                                onerror="this.onerror=null; this.src='https://frontend-bucket.vercel.app/images/store_front_img_not_found.svg';"
+                                                                style="max-width: 100%; max-height: 100%; object-fit: contain; display: block; margin: auto;">
+                                                        </div>
+                                                    </div>
+                                                    <span>
+                                                        {% if product.inventory.total_available %}
+
+                                                    </span>
+                                                    <div
+                                                        style="position: absolute; top: 2.82mm; left: 2.82mm; background: #F2F6E7; color: #4F555E; font-size: 3.88mm; font-weight: 500; padding: 1.06mm 2.82mm; border-radius: 15.52mm; display: inline-block; white-space: nowrap; overflow: hidden;">
+                                                        <span
+                                                            style="width: 2.82mm; height: 2.82mm; background: #7DA50E; border-radius: 44px; display: inline-block; margin-right: 2.12mm; vertical-align: middle;"></span>
+                                                        <span style="vertical-align: middle;">Available: {{
+                                                            product.inventory.total_available | int }} units</span>
+                                                    </div>
+                                                    <span>{% endif %}</span>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 100%; box-sizing: border-box;">
+                                            <span>
+
+                                                {% if product.sku_id %}
+                                            </span>
+                                            <p
+                                                style="font-size: 3.88mm; font-weight: 400; color: #676D77; margin-bottom: 2.12mm;">
+                                                <span>
+                                                    {{ product.sku_id }}
+
+                                                </span>
+                                            </p>
+                                            <span>{% endif %}</span>
+                                            <span>
+
+                                                {% if product.product_name %}
+                                            </span>
+                                            <h2
+                                                style="font-size: 4.23mm; font-weight: 700; color: #000000DE; margin-bottom: 2.12mm;">
+                                                <span>
+                                                    {{ product.product_name }}
+
+                                                </span>
+                                            </h2>
+                                            <span>{% endif %}</span>
+                                            <span>
+                                                {% if product.category and product.category|length > 0 or
+                                                product.collection and product.collection|length > 0 %}
+
+                                            </span>
+                                            <table
+                                                style="width: auto; border-collapse: collapse; border-spacing: 0; margin-bottom: 2.12mm;">
+                                                <tr>
+                                                    <span>
+
+                                                        {% if product.category and product.category|length > 0 %}
+                                                    </span>
+                                                    <td
+                                                        style="font-size: 3.88mm; color: #4F555E; padding-right: 2.12mm; font-weight: 400;">
+                                                        <span>
+                                                            {{ product.category[0].name }}
+
+                                                        </span>
+                                                    </td>
+                                                    <span>{% endif %}</span>
+                                                    <span>
+
+                                                        {% if product.category and product.category|length > 0 and
+                                                        product.collection and product.collection|length > 0 %}
+                                                    </span>
+                                                    <td
+                                                        style="font-size: 4.23mm; color: #4F555E; font-weight: 400; padding-right: 2.12mm;">
+                                                        &#8226;
+                                                    </td>
+                                                    <span>{% endif %}</span>
+                                                    <span>
+
+                                                        {% if product.collection and product.collection|length > 0 %}
+                                                    </span>
+                                                    <td style="font-size: 3.88mm; color: #4F555E; font-weight: 400;">
+                                                        <span>
+
+                                                            {{ product.collection[0].name }}
+                                                        </span>
+                                                    </td>
+                                                    <span>{% endif %}</span>
+                                                </tr>
+                                            </table>
+                                            <span>{% endif %}</span>
+                                            <span>
+                                                {% if product.hinge_attributes %}
+
+                                            </span>
+                                            <div style="padding-bottom: 2.12mm; font-size: 0;">
+                                                <span>
+                                                    {% for attribute in product.hinge_attributes %}
+
+                                                </span>
+                                                <span class="chip" style="font-size: 3.88mm;">
+                                                    <span>
+
+                                                        {{ attribute.value }}
+                                                    </span>
+                                                </span>
+                                                <span>{% endfor %}</span>
+                                            </div>
+                                            <span>{% endif %}</span>
+                                            <span>
+
+                                                {% if product.price_value and product.price_currency %}
+                                            </span>
+                                            <table
+                                                style="border-collapse: collapse; margin-bottom: 2.12mm; width: auto;">
+                                                <tr>
+                                                    <span>
+
+                                                        {% if product.price_value and product.price_currency %}
+                                                    </span>
+                                                    <td
+                                                        style="font-size: 4.23mm; font-weight: 700; color: rgba(0, 0, 0, 0.87); padding-right: 3.53mm;">
+                                                        <span>
+
+                                                            {{ product.price_currency }}{{ product.price_value }}
+                                                        </span>
+                                                    </td>
+                                                    <span>{% endif %}</span>
+                                                    <span>
+                                                        <span>
+                                                            {% if product.moq %}
+
+                                                        </span>
+
+                                                    </span>
+                                                    <td style="font-size: 3.88mm; font-weight: 400; color: #676D77;">
+                                                        <span>
+
+                                                            (MOQ-{{ product.moq }})
+                                                        </span>
+                                                    </td>
+                                                    <span>{% endif %}</span>
+                                                </tr>
+                                            </table>
+                                            <span>{% endif %}</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    <tbody>
+                                        <span>
+
+                                            {% for attribute in product.product_attributes %}
+                                        </span>
+                                        <tr>
+                                            <span>
+
+                                                {% if attribute.value %}
+                                            </span>
+                                            <td
+                                                style="width: 25%; font-size: 3.88mm; font-weight: 400; color: #676D77; padding-bottom: 2.12mm;">
+                                                <span>
+
+                                                    {{ attribute.name }}
+                                                </span>
+                                            </td>
+                                            <td
+                                                style="width: 75%; font-size: 3.88mm; font-weight: 400; color: #25282D; padding-bottom: 2.12mm;">
+                                                <span>
+
+                                                    {% if attribute.value.startswith("https://") %}
+                                                </span>
+                                                <a href="{{ attribute.value }}" target="_blank">{{ attribute.value
+                                                    }}</a>
+                                                <span>{% else %}</span>
+                                                <span>
+                                                    {{ attribute.value }}
+
+                                                </span>
+                                                <span>{% endif %}</span>
+                                            </td>
+                                            <span>{% endif %}</span>
+                                        </tr>
+                                        <span>{% endfor %}</span>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <span>{% endfor %}</span>
+                            <span>
+
+                                {% if product_row|length == 1 %}
+                            </span>
+                            <td style="width: 50%;"></td>
+                            <span>{% endif %}</span>
+                        </tr>
+                    </table>
+                </div>
+                <span>{% endfor %}</span>
+                <span>
+
+                    {% if not loop.last %}
+                </span>
+
+                <div style="page-break-after: always;"></div>
+                <span>{% endif %}</span>
+                <span>{% endfor %}</span>
+            </div>
+        </div>
+    </main>
+
+</body>
+
+</html>
